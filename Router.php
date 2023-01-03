@@ -32,9 +32,9 @@ class Router
 
         if ( $fn ) {
             call_user_func($fn, $this);
-        } else {
-            echo "Página No Encontrada o Ruta no válida";
-        }
+        } // else {
+        //     header('Location: /404');
+        // }
     }
 
     public function render($view, $datos = [])

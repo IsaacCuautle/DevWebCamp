@@ -1,13 +1,21 @@
-<main class="paquetes">
-    <h2 class="paquetes__heading"><?php echo $titulo ?></h2>
-    <p class="paquetes__descripcion">Compara los paquetes de DevWebCamp</p>
-        <div class="paquetes__grid">
-            <div class="paquete">
+<main class="registro">
+    <h2 class="registro__heading">
+        <?php echo $titulo; ?>
+    </h2>
+    <p class="registro__descripcion">Elige tu plan</p>
+    
+    <div class="paquetes__grid">
+            <div class="paquete">   
                 <h3 class="paquete__nombre">Pase Gratis</h3>
                 <ul class="paquete__lista">
                     <li class="paquete__elemento">Acceso Virtual a DevWebCamp</li>
                 </ul>
                 <p class="paquete__precio">$0</p>
+
+                <form action="/finalizar-registro/gratis" method="post">
+                    <input type="submit" class="paquetes__submit" value="Inscripcion Gratis">
+                </form>
+
             </div>  
             <div class="paquete">
                 <h3 class="paquete__nombre">Pase Presencial</h3>
