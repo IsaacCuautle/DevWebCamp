@@ -30,6 +30,7 @@
                     icon: 'error',
                     confirmButtonText: 'OK'
                 })
+                return;
             }
 
         }
@@ -62,26 +63,27 @@
                 })
             } else {
                 const noRegistros = document.createElement('P')
-                noRegistros.textContent = 'No hay eventos añade hasta 5 de lado izquierdo';
+                noRegistros.textContent = 'No hay eventos, añade hasta 5 de lado izquierdo';
                 noRegistros.classList.add('registro__texto');
                 resumen.appendChild(noRegistros);
             }
         }
 
-        function LimpiarEventos() {
-            while (resumen.firstChild) {
-                resumen.removeChild(resumen.firstChild);
-            }
-        }
-
+        
         function eliminarEvento(id) {
             eventos = eventos.filter(evento => evento.id != id);
             const botonAgregar = document.querySelector(`[data-id="${id}"]`);
             botonAgregar.disabled = false;
             mostrarEventos();
         }
+        
+        function LimpiarEventos() {
+            while (resumen.firstChild) {
+                resumen.removeChild(resumen.firstChild);
+            }
+        }
 
-         async function submitFormulario(e) {
+        async function submitFormulario(e) {
             e.preventDefault();
             
             // Obtener el regalo
@@ -94,7 +96,7 @@
                     text: 'Debes seleccionar por lo menos un evento y un regalo',
                     icon: 'error',
                     confirmButtonText: 'OK'
-                });
+                })
                 return;
             }
 
@@ -104,13 +106,30 @@
             datos.append('regalo_id', regaloId);
 
             const url = '/finalizar-registro/conferencias';
-            const respuesta =  await fetch(url, {
+            const respuesta = await fetch(url, {
                 method: 'POST',
                 body: datos
-            })
-            
-            const resultado = await respuesta.json()
+            })   
+            const resultado = await respuesta.json();
             console.log(resultado);
+            if(resultado.resultado) {
+                Swal.fire(
+                    'Registro Exitoso',
+                    'Tus conferencias se han almacenado y tu registro fue exitoso, te esperamos en DevWebCamp',
+                    'success'
+                )
+                .then(() => location.href = `/boleto?id=${resultado.token}`)
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Ocurrio un error en tu registro intentalo mas tarde',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
+                .then(() => location.reload())
+
+                return;
+            }
         }
     }
  })();

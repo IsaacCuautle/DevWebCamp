@@ -121,9 +121,9 @@ class ActiveRecord {
 
     // Obtener Registros con cierta cantidad
     public static function get($limite) {
-        $query = "SELECT * FROM " . static::$tabla . " LIMIT ${limite} ORDER BY id DESC" ;
+        $query = "SELECT * FROM " . static::$tabla . " ORDER BY id DESC LIMIT ${limite} ";
         $resultado = self::consultarSQL($query);
-        return array_shift( $resultado ) ;
+        return $resultado;
     }
     
     // Paginador regristros
@@ -142,6 +142,13 @@ class ActiveRecord {
     // Retornar los registros por un orden
     public static function ordenar($columna, $orden) {
         $query = "SELECT * FROM " . static::$tabla . " ORDER BY ${columna} ${orden}";
+        $resultado = self::consultarSQL($query);
+        return $resultado;
+    }
+
+    // Retonrnar por orden y con un limite
+    public static function ordenarLimite($columna, $orden, $limite) {
+        $query = "SELECT * FROM " . static::$tabla . " ORDER BY ${columna} ${orden} LIMIT ${limite} ";
         $resultado = self::consultarSQL($query);
         return $resultado;
     }
